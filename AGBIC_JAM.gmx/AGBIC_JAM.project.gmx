@@ -3,6 +3,42 @@
   <Configs name="configs">
     <Config>Configs\Default</Config>
   </Configs>
+  <datafiles number="6" name="datafiles">
+    <datafile>
+      <name>testmap.json</name>
+      <exists>-1</exists>
+      <size>3644</size>
+      <exportAction>2</exportAction>
+      <exportDir></exportDir>
+      <overwrite>0</overwrite>
+      <freeData>-1</freeData>
+      <removeEnd>0</removeEnd>
+      <store>0</store>
+      <ConfigOptions>
+        <Config name="Default">
+          <CopyToMask>9223372036854775807</CopyToMask>
+        </Config>
+      </ConfigOptions>
+      <filename>testmap.json</filename>
+    </datafile>
+    <datafile>
+      <name>new_bg.png</name>
+      <exists>-1</exists>
+      <size>651</size>
+      <exportAction>2</exportAction>
+      <exportDir></exportDir>
+      <overwrite>0</overwrite>
+      <freeData>-1</freeData>
+      <removeEnd>0</removeEnd>
+      <store>0</store>
+      <ConfigOptions>
+        <Config name="Default">
+          <CopyToMask>9223372036854775807</CopyToMask>
+        </Config>
+      </ConfigOptions>
+      <filename>new_bg.png</filename>
+    </datafile>
+  </datafiles>
   <NewExtensions/>
   <sounds name="sound"/>
   <sprites name="sprites">
@@ -15,12 +51,18 @@
       <sprite>sprites\spr_boat</sprite>
     </sprites>
   </sprites>
-  <backgrounds name="background"/>
+  <backgrounds name="background">
+    <background>background\background0</background>
+  </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
     <scripts name="borrowed_scripts">
       <script>scripts\numeric_springing.gml</script>
       <script>scripts\array_smooth_1d.gml</script>
+      <scripts name="tiled runtime">
+        <script>scripts\scr_export_tiled_map.gml</script>
+        <script>scripts\scr_load_tiled_map.gml</script>
+      </scripts>
     </scripts>
   </scripts>
   <objects name="objects">
@@ -32,6 +74,7 @@
       <object>objects\par_solid</object>
     </objects>
     <object>objects\obj_master_control</object>
+    <object>objects\obj_floor</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_test</room>
