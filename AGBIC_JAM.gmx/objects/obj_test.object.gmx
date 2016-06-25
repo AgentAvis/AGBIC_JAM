@@ -142,14 +142,14 @@ if abs(acc) &gt; 2
 if acc &gt; 0
 {
     acc -= .025;
-    obj_water.vspd[__pos1] -= .75;
+    obj_water.vspd[__pos1] -= .75*(acc/2);
     image_xscale = 1;
 }
 
 if acc &lt; 0
 {
     acc += .025;
-    obj_water.vspd[__pos2] -= .75;
+    obj_water.vspd[__pos2] -= .75*(abs(acc)/2);
     image_xscale = -1;
 }
 
