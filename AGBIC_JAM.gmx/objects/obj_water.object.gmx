@@ -113,7 +113,7 @@ with obj_water {
 
 //Here we add random disturbance to the water, by adding to random nodes' vertical speed.
 repeat(disturbance*image_xscale) {
- vspd[irandom_range(1,nodes-1)] += choose(.25,-.25);
+ vspd[irandom_range(1,nodes-1)] += choose(.1,-.1);
 }
 
 //Smooth out vspd values
@@ -132,7 +132,7 @@ for(var i=0;i&lt;nodes;i++){
  ypos[i] = median(min(wave_max,sprite_height),ypos[i],-wave_max); //We limit this to be withing out wave_max range (and no deeper than our sprite is tall).
  
  //We then force down water touching with solids or water above itself
- while ypos[i] &lt; 0 &amp;&amp; (collision_line(x+i*__ndist,y+ypos[i],x+i*__ndist,y,obj_water,false,true)) || collision_line(x+i*__ndist,y+ypos[i],x+i*__ndist,y,solids,false,true) {
+ while ypos[i] &lt; 0 &amp;&amp; ((collision_line(x+i*__ndist,y+ypos[i],x+i*__ndist,y,obj_water,false,true)) || collision_line(x+i*__ndist,y+ypos[i],x+i*__ndist,y,solids,false,true)) {
   ypos[i]++;
  }
  

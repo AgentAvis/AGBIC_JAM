@@ -18,7 +18,7 @@ file_text_close(data_file);
 if ( !is_undefined(json_data) )
 {
     var json = json_decode( json_data );
-    show_debug_message("read from file");
+    //show_debug_message("read from file");
 }
 else
     exit;
@@ -33,7 +33,7 @@ var tileset_img = ds_map_find_value(tileset, "image");
 var tile_cols = ds_map_find_value(tileset, "imagewidth") / global.tilewidth;
 var tile_rows = ds_map_find_value(tileset, "imageheight") / global.tileheight;
 var layer_depth = 0;
-show_debug_message(working_directory + tileset_img);
+//show_debug_message(working_directory + tileset_img);
 tileset_bg = background0;//background_add(working_directory + tileset_img, 0, false );
 
 var lst_layers = ds_map_find_value( json, "layers" );
@@ -57,7 +57,7 @@ for ( var layer_i = 0; layer_i < ds_list_size(lst_layers); layer_i++){
                     var y_scl = 1;
                     var flip_x = false;
                     var flip_y = false;
-                    show_debug_message(tile_id);
+                    //show_debug_message(tile_id);
                     if (tile_id < 0 )
                     {   
                             x_scl = -1;               
@@ -73,9 +73,9 @@ for ( var layer_i = 0; layer_i < ds_list_size(lst_layers); layer_i++){
                     if ( tile_id != 0 ) {
                         var tile_x = ((( tile_id - 1) mod tile_cols ) * global.tilewidth ) ; 
                         var tile_y = ((( tile_id - 1) div tile_cols ) * global.tileheight ); 
-                        show_debug_message(string(tile_x) + "," + string(tile_y));
-                        show_debug_message("x: " + string(x_scl) + " y: " + string(y_scl) );
-                        var tile = tile_add(tileset_bg, tile_x, tile_y, global.tilewidth, global.tileheight, (k * global.tilewidth) + (global.tilewidth * flip_x), (j * global.tileheight) + (global.tileheight * flip_y), layer_depth);
+                        //show_debug_message(string(tile_x) + "," + string(tile_y));
+                        //show_debug_message("x: " + string(x_scl) + " y: " + string(y_scl) );
+                        var tile = tile_add(tileset_bg, tile_x, tile_y, global.tilewidth, global.tileheight, (k * global.tilewidth) + (global.tilewidth * flip_x), (j * global.tileheight) + (global.tileheight * flip_y), layer_depth+1);
                         tile_set_scale(tile, x_scl, y_scl);
                     }                         
                 }
