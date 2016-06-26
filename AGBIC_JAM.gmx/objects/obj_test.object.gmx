@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>self</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -53,6 +53,7 @@ ang_prev = 0;
             <string>view_wview = (abs(acc)*64)+480;
 view_hview = (view_wview*9)/16;
 view_xview = x-(view_wview/2);
+view_yview = y-(view_hview/2);
 </string>
           </argument>
         </arguments>
@@ -142,14 +143,14 @@ if abs(acc) &gt; 2
 if acc &gt; 0
 {
     acc -= .025;
-    obj_water.vspd[__pos1] -= .75*(acc/2);
+    obj_water.vspd[__pos1] -= .25*(acc/2);
     image_xscale = 1;
 }
 
 if acc &lt; 0
 {
     acc += .025;
-    obj_water.vspd[__pos2] -= .75*(abs(acc)/2);
+    obj_water.vspd[__pos2] -= .25*(abs(acc)/2);
     image_xscale = -1;
 }
 
@@ -157,42 +158,6 @@ image_angle += obj_water.ypos[__pos-1]-obj_water.ypos[__pos+1];
 
 image_angle = clamp(lerp(ang_prev,image_angle,0.5),-4,4);
 ang_prev = image_angle;
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="4" ename="obj_water">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///Splash water
-if is_water_surface_collision {
- var __vspd = (y-yprevious)/3, //This instance's vertical speed
- __pos = mean(bbox_left,bbox_right); //And it's horizontal center
- with other {
-  __pos -= x; //Compared to the water's placement
-  __pos = clamp(round(__pos/sprite_width*nodes),0,nodes-1); //Converted to placement in array
-  vspd[__pos] += __vspd;
- }
-} else {
- //Just for visually slowing down in the water
- x = mean(x,xprevious);
- y = mean(y,yprevious);
-}
 </string>
           </argument>
         </arguments>
