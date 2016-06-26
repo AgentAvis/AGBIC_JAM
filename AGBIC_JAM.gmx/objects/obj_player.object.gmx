@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>self</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -26,11 +26,14 @@
           <argument>
             <kind>1</kind>
             <string>//tweakables
-with (oPlayer) { Speed = 2 JumpSpeed = 2.75 }
-global.Grav = .13
+Speed = 2 * 2 JumpSpeed = 2.75 * 2
+global.Grav = .13 * 3
 HP = 2
 jumps = 20
 image_speed = 0.15
+ht = Speed * 2 //horisontal terminal velocity
+vt = 16
+scale = .5
 
 //init
 vsp = 0                //custon vspeed
@@ -39,6 +42,9 @@ App = false            //used for slo-mo basically
 app = 0                //timerr used to count if its time for me to do things
 lastside = 0           //last side i slid on, should be disabled
 num = 0                //used for animating the SECOND drawn sprite
+image_xscale = scale
+image_yscale = scale
+
 
 //audio
 playLandSound = false; //forget what this is for
@@ -64,8 +70,8 @@ playLandSound = false; //forget what this is for
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//ScTime()
-//cheats
+            <string>//boarding the ship
+if place_meeting(x,y,obj_latter) and keyboard_check_pressed(ord('F')) { instance_destroy() }
 
 if keyboard_check_pressed(ord('T')) and global.debug { x = mouse_x y = mouse_y }
 
@@ -75,21 +81,8 @@ left = keyboard_check(ord('A'))
 right = keyboard_check(ord('D'))
 down = keyboard_check(ord('S'))
 
-//autojump when you land on something
-    //disabled
-    /*
-Stomp = collision_rectangle(x-5,y+1,x+3,y+5,oStompable,true,true)
-if instance_exists(Stomp) and vsp &gt; 0
-{
-    with (Stomp) { HP -= 1 }
-    vsp = -JumpSpeed 
-}
-    */
-    
-//if App { //this makes sure everything works the same even if time is slowed
-
 //Gravity yo
-if place_meeting(x,y+2,0) { vsp = 0 } else { vsp += global.Grav }
+if place_meeting(x,y+2,par_solid_platforming) { vsp = 0 } else { vsp += global.Grav }
     
 //Walking
 if !(right and left) {
@@ -98,20 +91,18 @@ if !(right and left) {
 }
 //drag
 if !left and !right {
-    if place_meeting(x,y+2,par_solid) {
+    if place_meeting(x,y+2,par_solid_platforming) {
         hsp = hsp * .6
     } else {
         hsp = hsp *.95
     }
 }
 
-//}
-
-if !collision_line(x-1,y+4,x-1,y+8,par_solid,true,true) and !down {
+if !collision_line(x-1,y+4,x-1,y+8,par_solid_platforming,true,true) and !down {
     //wall sliding
     
-    slide1 = instance_place(x+2,y,par_solid)
-    slide2 = instance_place(x-2,y,par_solid)
+    slide1 = instance_place(x+2,y,par_solid_platforming)
+    slide2 = instance_place(x-2,y,par_solid_platforming)
      
     if instance_exists(slide1) {//and sign(vsp) != 1 {
         if up and vsp != 0 {//and slide1.object_index != oWall2 {
@@ -140,30 +131,30 @@ if !collision_line(x-1,y+4,x-1,y+8,par_solid,true,true) and !down {
 }
 
 //jumping
-if up and place_meeting(x,y + 2,par_solid) {
+if up and place_meeting(x,y + 2,par_solid_platforming) {
     vsp = -JumpSpeed
     ///Jump sound goes here [ben]
 }
 
 //terminal velocity(s)  (These prevent things from getting too crazy)
-if abs(hsp) &gt; 4 { hsp = sign(hsp) * 4 }
-if abs(vsp) &gt; 6 { vsp = sign(vsp) * 6 }
+if abs(hsp) &gt; ht { hsp = sign(hsp) * ht }
+if abs(vsp) &gt; vt { vsp = sign(vsp) * vt }
 
 //DO NOT MODIFY SPEED BELOW THIS LINE!! DO NOT MODIFY SPEED BELOW THIS LINE!! DO NOT MODIFY SPEED BELOW THIS LINE!! DO NOT MODIFY SPEED BELOW THIS LINE!!
 //DO NOT MODIFY SPEED BELOW THIS LINE!! DO NOT MODIFY SPEED BELOW THIS LINE!! DO NOT MODIFY SPEED BELOW THIS LINE!! DO NOT MODIFY SPEED BELOW THIS LINE!!    
 
     // Collisions
 //Horizontal collisions
-if (place_meeting(x+hsp, y, par_solid)) {
-    while (!place_meeting(x+sign(hsp),y,par_solid)){
+if (place_meeting(x+hsp, y, par_solid_platforming)) {
+    while (!place_meeting(x+sign(hsp),y,par_solid_platforming)){
         x += sign(hsp);
     }
     hsp = 0;
 }
 x += hsp //* global.time;
 //vertical collisions
-if (place_meeting(x, y+vsp, par_solid)) {
-    while (!place_meeting(x,y+sign(vsp),par_solid)){
+if (place_meeting(x, y+vsp, par_solid_platforming)) {
+    while (!place_meeting(x,y+sign(vsp),par_solid_platforming)){
         y += sign(vsp);
         playLandSound = true;
     }
@@ -179,7 +170,7 @@ y += vsp //* global.time;
 //animation stuff
 
 //point me the right direction!
-if sign(hsp) != 0 and (right or left) { image_xscale = sign(hsp) }
+if sign(hsp) != 0 and (right or left) { image_xscale = scale * sign(hsp) }
 
 //am i running or am i idle
 if hsp &gt; .2 or hsp &lt; -.2
@@ -207,32 +198,6 @@ if hsp &gt; .2 or hsp &lt; -.2
     }
 */
 
-//health stuff
-//var spike;
-//spike = instance_place(x,y,oSpikes)
-//if instance_exists(spike) { if spike.state != false { HP -= 1 } }
-
-if HP &lt;= 0 {
-    //death sound [ben]
-    /*
-    //blood, disabled
-    repeat(200) {
-        
-        with (instance_create(x,y,oBlood)) {
-            s = true
-            dir = random(360)
-            spd = random(5)
-            hsp = lengthdir_x(spd,dir)
-            vsp = lengthdir_y(spd,dir)
-            image_blend = make_colour_rgb(random_range(151,255),80,79) //181
-            image_alpha = random_range(.6,1.5)
-            if image_alpha &gt; 1 { image_alpha = 1 }
-        }
-        
-    }
-    */
-    instance_destroy()
-}
 
 </string>
           </argument>
