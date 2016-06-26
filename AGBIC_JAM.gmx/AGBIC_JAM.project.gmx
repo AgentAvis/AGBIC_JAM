@@ -69,6 +69,9 @@
       </scripts>
     </scripts>
   </scripts>
+  <fonts name="fonts">
+    <font>fonts\fnt_test</font>
+  </fonts>
   <objects name="objects">
     <objects name="Actors">
       <object>objects\oPlayer</object>

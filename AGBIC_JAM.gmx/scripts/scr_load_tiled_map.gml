@@ -25,7 +25,8 @@ else
 
 global.tilewidth = ds_map_find_value( json, "tilewidth" );
 global.tileheight = ds_map_find_value( json, "tileheight" );
-var map_width = ds_map_find_value( json, "width" );
+globalvar map_width;
+map_width = ds_map_find_value( json, "width" );
 var map_height = ds_map_find_value( json, "height" );
 var lst_tileset = ds_map_find_value( json, "tilesets" );
 var tileset = ds_list_find_value(lst_tileset, 0);
