@@ -28,10 +28,11 @@
             <string>draw_set_font(fnt_test);
 draw_set_colour(c_white);
 draw_text(8,8,'nodes: ' +string(obj_water.nodes));
-draw_text(8,20,'smoothness: ' +string(obj_water.smoothness));
-draw_text(8,34,'disturbance: ' +string(obj_water.disturbance));
-draw_text(8,46,'dampening: ' +string(obj_water.damp));
-draw_text(8,58,'frequency: ' +string(obj_water.freq));
+draw_text(8,24,'smoothness: ' +string(obj_water.smoothness));
+draw_text(8,40,'disturbance: ' +string(obj_water.disturbance));
+draw_text(8,56,'dampening: ' +string(obj_water.damp));
+draw_text(8,72,'frequency: ' +string(obj_water.freq));
+draw_text(8,88,'fps: ' +string(fps));
 </string>
           </argument>
         </arguments>

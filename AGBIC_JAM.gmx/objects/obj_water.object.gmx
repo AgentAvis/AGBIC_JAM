@@ -36,14 +36,14 @@ image_alpha = .4; //The density/see-thoughness of the water.
 tw = 0;
 
 glimmer = true; //If you want the top waves to glimmer.
-nodes = ceil((sprite_width)/64); //More nodes = more realistic, but also slower.
+nodes = ceil((sprite_width)/8); //More nodes = more realistic, but also slower.
 smoothness = 3; //How much to smooth out the waves.
 disturbance = 1; //How disturbed the water should be.
 wave_max = sprite_height; //The maximum wave height and depth.
 solids = par_solid; //Set to -1 if you have no solid objects (preferably a parent).
 damp = 0.0125; //Damping of the oscillation
 freq = 8; //Oscillations per second
-time = .025; //Time step
+time = .1; //Time step
 
 /*
  Every node needs a y-position (wY) and a vertical speed (vspd).
@@ -122,7 +122,7 @@ repeat(disturbance*image_xscale) {
 vspd = array_smooth_1d(vspd,(smoothness-1)/2)
 
 //wave function
-var k = 64, om = 2/pi;
+var k = 8, om = 2/pi;
 for(var i = 0; i &lt; nodes; i++;)
 {
 ypos[i] = cos(degtorad((k*i) -(om*tw)))*16;

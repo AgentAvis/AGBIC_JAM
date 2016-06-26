@@ -98,7 +98,7 @@ if !(right and left) {
 }
 //drag
 if !left and !right {
-    if place_meeting(x,y+2,par_solid) {
+    if place_meeting(x,y+2,obj_floor) {
         hsp = hsp * .6
     } else {
         hsp = hsp *.95
@@ -107,11 +107,11 @@ if !left and !right {
 
 //}
 
-if !collision_line(x-1,y+4,x-1,y+8,par_solid,true,true) and !down {
+if !collision_line(x-1,y+4,x-1,y+8,obj_floor,true,true) and !down {
     //wall sliding
     
-    slide1 = instance_place(x+2,y,par_solid)
-    slide2 = instance_place(x-2,y,par_solid)
+    slide1 = instance_place(x+2,y,obj_floor)
+    slide2 = instance_place(x-2,y,obj_floor)
      
     if instance_exists(slide1) {//and sign(vsp) != 1 {
         if up and vsp != 0 {//and slide1.object_index != oWall2 {
@@ -140,7 +140,7 @@ if !collision_line(x-1,y+4,x-1,y+8,par_solid,true,true) and !down {
 }
 
 //jumping
-if up and place_meeting(x,y + 2,par_solid) {
+if up and place_meeting(x,y + 2,obj_floor) {
     vsp = -JumpSpeed
     ///Jump sound goes here [ben]
 }
@@ -154,16 +154,16 @@ if abs(vsp) &gt; 6 { vsp = sign(vsp) * 6 }
 
     // Collisions
 //Horizontal collisions
-if (place_meeting(x+hsp, y, par_solid)) {
-    while (!place_meeting(x+sign(hsp),y,par_solid)){
+if (place_meeting(x+hsp, y, obj_floor)) {
+    while (!place_meeting(x+sign(hsp),y,obj_floor)){
         x += sign(hsp);
     }
     hsp = 0;
 }
 x += hsp //* global.time;
 //vertical collisions
-if (place_meeting(x, y+vsp, par_solid)) {
-    while (!place_meeting(x,y+sign(vsp),par_solid)){
+if (place_meeting(x, y+vsp, obj_floor)) {
+    while (!place_meeting(x,y+sign(vsp),obj_floor)){
         y += sign(vsp);
         playLandSound = true;
     }
