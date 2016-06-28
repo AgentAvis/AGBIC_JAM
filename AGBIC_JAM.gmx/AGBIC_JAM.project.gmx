@@ -94,6 +94,7 @@
     <object>objects\obj_dj</object>
     <object>objects\obj_master_control</object>
     <object>objects\obj_floor</object>
+    <object>objects\obj_chunk_control</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_init</room>
