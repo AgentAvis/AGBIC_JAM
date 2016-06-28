@@ -6,7 +6,7 @@
   <depth>0</depth>
   <persistent>0</persistent>
   <parentName>self</parentName>
-  <maskName>&lt;undefined&gt;</maskName>
+  <maskName>spr_player_mask</maskName>
   <events>
     <event eventtype="0" enumb="0">
       <action>
@@ -145,14 +145,29 @@ if abs(vsp) &gt; vt { vsp = sign(vsp) * vt }
 
     // Collisions
 //Horizontal collisions
-if (place_meeting(x+hsp, y, par_solid_platforming)) {
-    while (!place_meeting(x+sign(hsp),y,par_solid_platforming)){
-        x += sign(hsp);
+if (vsp == 0) // "Stick" player to ground on shallow downward slopes
+{
+    yplus = 0;
+    while (!place_meeting(x,y+yplus+1,par_solid_platforming) &amp;&amp; yplus &lt;= abs(.5*hsp)) yplus +=1;
+    if place_meeting(x,y+yplus+1,par_solid_platforming)
+    {
+        y += yplus;
     }
-    hsp = 0;
+}
+if (place_meeting(x+hsp, y, par_solid_platforming)) {
+    
+    yplus = 0;
+    while (place_meeting(x+hsp,y-yplus,par_solid_platforming) and yplus &lt;= abs(1 * hsp)) { yplus ++ }
+    if place_meeting(x+hsp,y-yplus,par_solid_platforming) {  
+        
+        while (!place_meeting(x+sign(hsp),y,par_solid_platforming)){ x += sign(hsp);}
+        hsp = 0;
+    } else {
+    y-= yplus;
+    }
 }
 x += hsp //* global.time;
-//vertical collisions
+
 if (place_meeting(x, y+vsp, par_solid_platforming)) {
     while (!place_meeting(x,y+sign(vsp),par_solid_platforming)){
         y += sign(vsp);

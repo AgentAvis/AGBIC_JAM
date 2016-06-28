@@ -53,6 +53,7 @@
     <sprites name="Actors">
       <sprite>sprites\spr_player_run</sprite>
       <sprite>sprites\spr_player_idle</sprite>
+      <sprite>sprites\spr_player_mask</sprite>
     </sprites>
     <sprites name="Misc">
       <sprite>sprites\spr_latter</sprite>
