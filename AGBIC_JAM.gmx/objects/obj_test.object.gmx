@@ -29,6 +29,7 @@
 acc = 0;
 ang_prev = 0;
 density = 0.125;
+b = false
 </string>
           </argument>
         </arguments>
