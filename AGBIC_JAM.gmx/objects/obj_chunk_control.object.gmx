@@ -25,9 +25,58 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>chunk_size = view_wview div tile_size;
+            <string>//initializing chunk variables
+chunk_size = view_wview div tile_size;
 width = ceil(map_width/chunk_size);
-height = 1;
+load_radius = 1;
+
+//initializing grid that stores the chunks
+chunk_grid = ds_grid_create(width,1);
+ds_grid_set_region(chunk_grid,0,0,width,0,noone);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>var check_obj;
+
+with(obj_boat)
+{
+    if b { check_obj = obj_boat} else { check_obj = obj_player}
+}
+
+var chunk_x = check_obj.x div (chunk_size*tile_size);
+var ii;
+
+for(var i = (chunk_x - load_radius); i&lt;= (chunk_x+load_radius); i++;)
+{
+    ii = i;
+    if i &lt; 0 { ii = width}
+    if i &gt; width { ii = 0}
+    if (ds_grid_get(chunk_grid,ii,0) == noone)
+    {
+        var chunk = instance_create(i,0,obj_chunk);
+        ds_grid_set(chunk_grid,ii,0,chunk);
+        chunk.read = ii;
+    }
+}
 </string>
           </argument>
         </arguments>

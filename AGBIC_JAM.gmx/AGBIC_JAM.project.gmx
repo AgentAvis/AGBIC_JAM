@@ -87,14 +87,13 @@
       <object>objects\obj_water</object>
     </objects>
     <objects name="solids">
-      <object>objects\obj_test</object>
+      <object>objects\obj_boat</object>
       <object>objects\par_solid</object>
       <object>objects\par_solid_platforming</object>
     </objects>
     <object>objects\obj_dj</object>
     <object>objects\obj_master_control</object>
     <object>objects\obj_floor</object>
-    <object>objects\obj_chunk_control</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_init</room>

@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>-2</depth>
   <persistent>0</persistent>
-  <parentName>self</parentName>
+  <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -52,10 +52,24 @@ b = -1;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//view_wview = (abs(acc)*64)+480;
+            <string>//view_wview = (abs(x-xprevious)*64)+480;
 //view_hview = (view_wview*9)/16;
+if (x &gt; ((obj_water.startX+(32*obj_water.image_xscale))-(view_wview[0] / 2))+1){
+    x = obj_water.startX+(view_wview[0] / 2)+1;
+    //view_xview[0] = 0;
+    }
+if (x &lt; (obj_water.startX+(view_wview[0] / 2))){
+    x = ((obj_water.startX+(32*obj_water.image_xscale))-(view_wview[0] / 2));
+    //view_xview[0] = (room_width-view_wview[0]);
+    }
+    
 view_xview = x-(view_wview/2);
 view_yview = y-(view_hview/2);
+
+with(obj_water)
+{
+    x = startX+view_xview;
+}
 </string>
           </argument>
         </arguments>
