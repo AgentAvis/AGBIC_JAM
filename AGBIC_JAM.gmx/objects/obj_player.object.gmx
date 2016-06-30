@@ -164,6 +164,7 @@ if (place_meeting(x+hsp, y, par_solid_platforming)) {
         hsp = 0;
     } else {
     y-= yplus;
+    if yplus &gt; 2 { hsp *= .75 }
     }
 }
 x += hsp //* global.time;
