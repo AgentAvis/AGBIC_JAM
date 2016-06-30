@@ -25,7 +25,8 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Setup
+            <string>startX = x;
+///Setup
 /*
  You can also set all these variables in the creation code of the
  instance in the room editor for more customized water bodies.
