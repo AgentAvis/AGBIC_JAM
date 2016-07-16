@@ -3,7 +3,7 @@
   <spriteName>spr_player_idle</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>-1</depth>
   <persistent>0</persistent>
   <parentName>self</parentName>
   <maskName>spr_player_mask</maskName>
@@ -34,6 +34,7 @@ image_speed = 0.15
 ht = Speed * 2 //horisontal terminal velocity
 vt = 16
 scale = .5
+can_jump = false;
 
 //init
 vsp = 0                //custon vspeed
@@ -71,7 +72,7 @@ playLandSound = false; //forget what this is for
           <argument>
             <kind>1</kind>
             <string>//boarding the ship
-if place_meeting(x,y,obj_latter) and keyboard_check_pressed(ord('F')) { instance_destroy() }
+if place_meeting(x,y+2,obj_boat) and keyboard_check_pressed(ord('F')) { instance_destroy() }
 
 if keyboard_check_pressed(ord('T')) and global.debug { x = mouse_x y = mouse_y }
 
@@ -81,8 +82,17 @@ left = keyboard_check(ord('A'))
 right = keyboard_check(ord('D'))
 down = keyboard_check(ord('S'))
 
-//Gravity yo
-if place_meeting(x,y+2,par_solid_platforming) { vsp = 0 } else { vsp += global.Grav }
+if !instance_place(x,y,obj_latter)
+{
+    //Gravity yo
+    if place_meeting(x,y+2,par_solid_platforming) { vsp = 0 } else { vsp += global.Grav }
+    if place_meeting(x,y+2,obj_boat) { can_jump = false; } else { can_jump = true; }
+}
+
+if up &amp;&amp; instance_place(x,y,obj_latter)
+{
+y -= 10;
+}
     
 //Walking
 if !(right and left) {
@@ -131,7 +141,7 @@ if !collision_line(x-1,y+4,x-1,y+8,par_solid_platforming,true,true) and !down {
 }
 
 //jumping
-if up and place_meeting(x,y + 2,par_solid_platforming) {
+if up and place_meeting(x,y + 2,par_solid_platforming) &amp;&amp; can_jump {
     vsp = -JumpSpeed
     ///Jump sound goes here [ben]
 }

@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>-2</depth>
   <persistent>0</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>par_solid_platforming</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -67,6 +67,14 @@ view_xview = x-(view_wview/2);
 view_yview = y-(view_hview/2);
 
 with(obj_water)
+{
+    x = startX+view_xview;
+}
+with(obj_water_bg)
+{
+    x = startX+view_xview;
+}
+with(obj_water_fg)
 {
     x = startX+view_xview;
 }
@@ -192,6 +200,8 @@ if acc &lt; 0
 }
 
 obj_water.tw += xprevious-x;
+obj_water_fg.tw += xprevious-x;
+obj_water_bg.tw += xprevious-x;
 
 image_angle += obj_water.ypos[__pos-1]-obj_water.ypos[__pos+1];
 

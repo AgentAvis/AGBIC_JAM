@@ -3,9 +3,9 @@
   <spriteName>spr_water</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>-10</depth>
+  <depth>10</depth>
   <persistent>0</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>self</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -34,7 +34,7 @@
 color = make_colour_rgb(0,105,148); //The color of the water.
 image_alpha = .4; //The density/see-thoughness of the water.
 
-tw = 0;
+tw = 48;
 
 glimmer = true; //If you want the top waves to glimmer.
 nodes = ceil((sprite_width)/8); //More nodes = more realistic, but also slower.
@@ -110,7 +110,7 @@ if nodes != array_length_1d(ypos) {
             <string>///Update water
 var __ndist = (sprite_width/max(1,nodes-1)); //The distance between the nodes.
 //Toggle off mask to interact with other bodies of water
-with obj_water {
+with obj_water_bg {
  mask_index = -1; 
 }
 
@@ -131,27 +131,8 @@ ypos[i] = cos(degtorad((k*i) -(om*tw)))*16;
 
 tw--;
 
-//Updating the nodes' vertical speed and y position through a loop.
-for(var i=0;i&lt;nodes;i++){
- //If we are working with the end nodes, or if the water nodes is below other water or solids, we want them to stand still.
- if i == nodes-1 || i == 0 || position_meeting(x+i*__ndist,y-1,obj_water) {
-  ypos[i] = 0;
- } else {
-  var __r = numeric_springing(ypos[i],vspd[i],0,damp,freq,time);
-  ypos[i] = __r[0];
-  vspd[i] = __r[1];
- }
- ypos[i] = median(min(wave_max,sprite_height),ypos[i],-wave_max); //We limit this to be withing out wave_max range (and no deeper than our sprite is tall).
- 
- //We then force down water touching with solids or water above itself
- while ypos[i] &lt; 0 &amp;&amp; ((collision_line(x+i*__ndist,y+ypos[i],x+i*__ndist,y,obj_water,false,true)) || collision_line(x+i*__ndist,y+ypos[i],x+i*__ndist,y,solids,false,true)) {
-  ypos[i]++;
- }
- 
-}
-
 //Toggle on mask again
-with obj_water {
+with obj_water_bg {
  mask_index = mask_water;
 }
 </string>
@@ -175,6 +156,7 @@ with obj_water {
           <argument>
             <kind>1</kind>
             <string>///Collisions
+/*
 var __ndist = (sprite_width/max(1,nodes-1)), __id, __array = 0; //The distance between the nodes.
 //Collisions with the water surface
 for(var i=1;i&lt;nodes;i++){
@@ -220,42 +202,6 @@ if is_array(__array) {
    event_perform(ev_collision,other.object_index);
   }
  }
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="4" ename="obj_water">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///Splash water
-if is_water_surface_collision &amp;&amp; yspd &gt; 2 {
- var __vspd = (y-yprevious), //This instance's vertical speed
- __pos = mean(bbox_left,bbox_right); //And it's horizontal center
- with other {
-  __pos -= x; //Compared to the water's placement
-  __pos = clamp(round(__pos/sprite_width*nodes),0,nodes-1); //Converted to placement in array
-  ypos[__pos] += __vspd;
- }
-} else {
- //Just for visually slowing down in the water
- x = mean(x,xprevious);
- y = mean(y,yprevious);
 }
 </string>
           </argument>

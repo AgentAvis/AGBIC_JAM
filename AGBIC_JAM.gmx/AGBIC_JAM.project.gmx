@@ -72,6 +72,7 @@
         <script>scripts\scr_load_tiled_map.gml</script>
       </scripts>
     </scripts>
+    <script>scripts\approach.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_test</font>
@@ -86,6 +87,8 @@
     </objects>
     <objects name="water and shit like that">
       <object>objects\obj_water</object>
+      <object>objects\obj_water_bg</object>
+      <object>objects\obj_water_fg</object>
     </objects>
     <objects name="solids">
       <object>objects\obj_boat</object>
@@ -95,6 +98,7 @@
     <object>objects\obj_dj</object>
     <object>objects\obj_master_control</object>
     <object>objects\obj_floor</object>
+    <object>objects\obj_camera</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_init</room>
