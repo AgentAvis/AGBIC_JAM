@@ -31,8 +31,8 @@
  You can also set all these variables in the creation code of the
  instance in the room editor for more customized water bodies.
 */
-color = make_colour_rgb(0,105,148); //The color of the water.
-image_alpha = .4; //The density/see-thoughness of the water.
+color = make_colour_rgb(180,146,134); //The color of the water.
+image_alpha = .95; //The density/see-thoughness of the water.
 
 tw = 0;
 
@@ -293,15 +293,16 @@ draw_primitive_end();
 
 //If we want a glimmering surface, then we need to draw this as well! (almost in the same way).
 if glimmer {
- draw_set_color(c_white);
+ draw_set_color(make_colour_rgb(226,115,88));
  draw_primitive_begin(pr_trianglestrip);
  //We draw a 1 pixel thik line, with fading alpha depending on the wave height.
  for(var i=0;i&lt;nodes;i++){
   draw_set_alpha(0);
-  draw_vertex(x+i*__ndist,y+ypos[i]+3);
+  draw_vertex(x+i*__ndist,y+ypos[i]+6);
   draw_set_alpha(-ypos[i]*10);
   draw_vertex(x+i*__ndist,y+ypos[i]);
  }
+ draw_set_colour(c_white);
  draw_primitive_end();
 }
 

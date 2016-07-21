@@ -138,10 +138,10 @@ y = mouse_y;
         if right{ acc += .2 }
         if r_key{ room_restart() }
         
-        if keyboard_check_pressed(ord('F')) and place_meeting(x,y,obj_latter) and b {
+        if keyboard_check_pressed(ord('F')) &amp;&amp; b {
             //un-boarding code
             b = false
-            instance_create(x,y - 64,obj_player)
+            instance_create(x,bbox_top-(16),obj_player)
             speed *= .3
         }
     }

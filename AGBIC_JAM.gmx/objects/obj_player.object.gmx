@@ -35,7 +35,7 @@ ht = Speed * 2 //horisontal terminal velocity
 vt = 16
 scale = .5
 can_jump = false;
-
+ladder = false;
 //init
 vsp = 0                //custon vspeed
 hsp = 0                //custom hspeed
@@ -49,6 +49,49 @@ image_yscale = scale
 
 //audio
 playLandSound = false; //forget what this is for
+last_index = -1;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="2">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if sprite_index = spr_player_run
+{
+    if !(image_index == last_index)
+    {
+        if !(audio_is_playing(snd_sand_step) || audio_is_playing(snd_sand_step_1) || audio_is_playing(snd_sand_step_2))
+        {
+            audio_play_sound(choose(snd_sand_step,snd_sand_step_1,snd_sand_step_2),0,0);
+        }
+    }
+    else
+    {
+        audio_play_sound(snd_sand_decc,0,0);
+    }
+}
+else
+{
+    //audio_stop_sound(snd_sand_step);
+}
+
+last_index = image_index;
 </string>
           </argument>
         </arguments>
@@ -72,12 +115,12 @@ playLandSound = false; //forget what this is for
           <argument>
             <kind>1</kind>
             <string>//boarding the ship
-if place_meeting(x,y+2,obj_boat) and keyboard_check_pressed(ord('F')) { instance_destroy() }
+if place_meeting(x,y+1,obj_boat) and keyboard_check_pressed(ord('F')) { instance_destroy() }
 
 if keyboard_check_pressed(ord('T')) and global.debug { x = mouse_x y = mouse_y }
 
 //inputs
-up = keyboard_check_pressed(ord('W')) + keyboard_check_pressed(vk_space)
+up = keyboard_check(ord('W')) + keyboard_check_pressed(vk_space)
 left = keyboard_check(ord('A'))
 right = keyboard_check(ord('D'))
 down = keyboard_check(ord('S'))
@@ -85,23 +128,24 @@ down = keyboard_check(ord('S'))
 if !instance_place(x,y,obj_latter)
 {
     //Gravity yo
-    if place_meeting(x,y+2,par_solid_platforming) { vsp = 0 } else { vsp += global.Grav }
-    if place_meeting(x,y+2,obj_boat) { can_jump = false; } else { can_jump = true; }
+    if (place_meeting(x,y+1,par_solid_platforming) || place_meeting(x,y,obj_latter)) || place_meeting(x,bbox_bottom+1,obj_floor) { vsp = 0 } else { vsp += global.Grav }
+    if place_meeting(x,y,obj_boat) { can_jump = false; } else { can_jump = true; }
 }
 
-if up &amp;&amp; instance_place(x,y,obj_latter)
+if ((up || down) &amp;&amp; (instance_place(x,y,obj_latter) || instance_place(x,y+1,obj_latter)) &amp;&amp; !(instance_place(x,y+1,obj_boat)))
 {
-y -= 10;
+    ladder = true;
 }
     
 //Walking
 if !(right and left) {
-    if right { if hsp &lt; Speed { hsp += Speed * .2 } }
+    if right { if hsp &lt; Speed { hsp += Speed * .2 }  }
     if left { if hsp &gt; -Speed { hsp -= Speed * .2 } }
 }
+
 //drag
 if !left and !right {
-    if place_meeting(x,y+2,par_solid_platforming) {
+    if place_meeting(x,y+1,par_solid_platforming) {
         hsp = hsp * .6
     } else {
         hsp = hsp *.95
@@ -141,7 +185,7 @@ if !collision_line(x-1,y+4,x-1,y+8,par_solid_platforming,true,true) and !down {
 }
 
 //jumping
-if up and place_meeting(x,y + 2,par_solid_platforming) &amp;&amp; can_jump {
+if up and place_meeting(x,y + 1,par_solid_platforming) &amp;&amp; can_jump {
     vsp = -JumpSpeed
     ///Jump sound goes here [ben]
 }
@@ -190,6 +234,16 @@ if (place_meeting(x, y+vsp, par_solid_platforming)) {
         playLandSound = false;
     }
 }
+
+if ladder
+{
+    vsp = 0;
+    if (up) vsp = -2;
+    if (down) vsp = 2;
+    if !(place_meeting(x,y,obj_latter) || instance_place(x,y+1,obj_latter)) ladder = false;
+    if instance_place(x,y+1,obj_boat) vsp = 0;
+}
+
 y += vsp //* global.time;
 
 //animation stuff
@@ -202,7 +256,7 @@ if hsp &gt; .2 or hsp &lt; -.2
 {
     if vsp == 0 //and sprite_index != spr_player_death {
     {
-        sprite_index = spr_player_run
+        sprite_index = spr_player_run;
     }
 } else {
     if vsp == 0 //and sprite_index != spr_player_death

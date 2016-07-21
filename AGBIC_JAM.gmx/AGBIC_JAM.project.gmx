@@ -40,7 +40,14 @@
     </datafile>
   </datafiles>
   <NewExtensions/>
-  <sounds name="sound"/>
+  <sounds name="sound">
+    <sound>sound\snd_sand_decc</sound>
+    <sounds name="sand_steps">
+      <sound>sound\snd_sand_step</sound>
+      <sound>sound\snd_sand_step_1</sound>
+      <sound>sound\snd_sand_step_2</sound>
+    </sounds>
+  </sounds>
   <sprites name="sprites">
     <sprites name="water">
       <sprite>sprites\spr_water</sprite>

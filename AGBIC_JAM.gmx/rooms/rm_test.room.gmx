@@ -8,7 +8,7 @@
   <isometric>0</isometric>
   <speed>60</speed>
   <persistent>-1</persistent>
-  <colour>12615808</colour>
+  <colour>7581430</colour>
   <showcolour>-1</showcolour>
   <code>scr_load_tiled_map("testmap.json");</code>
   <enableViews>-1</enableViews>

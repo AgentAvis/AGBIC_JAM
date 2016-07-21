@@ -102,7 +102,7 @@ for ( var layer_i = 0; layer_i < ds_list_size(lst_layers); layer_i++){
                     object.image_xscale = object_scale_x;
                     object.image_yscale = object_scale_y;
                     object.x = object_x + ( object.sprite_xoffset);
-                    object.y = object_y + ( object.sprite_yoffset);
+                    object.y = object_y + ( object.sprite_yoffset)// - (object_height);
                 }
             }
         break;
