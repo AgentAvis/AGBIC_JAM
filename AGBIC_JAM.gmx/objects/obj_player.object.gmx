@@ -89,6 +89,8 @@ else
 {
     sp = -1;
 }
+
+show_debug_message(hsp);
 </string>
           </argument>
         </arguments>

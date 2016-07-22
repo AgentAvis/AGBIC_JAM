@@ -298,7 +298,7 @@ if glimmer {
  //We draw a 1 pixel thik line, with fading alpha depending on the wave height.
  for(var i=0;i&lt;nodes;i++){
   draw_set_alpha(0);
-  draw_vertex(x+i*__ndist,y+ypos[i]+12);
+  draw_vertex(x+i*__ndist,y+ypos[i]+6);
   draw_set_alpha(-ypos[i]*10);
   draw_vertex(x+i*__ndist,y+ypos[i]);
  }

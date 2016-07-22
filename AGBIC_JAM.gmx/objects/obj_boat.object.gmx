@@ -77,6 +77,7 @@ with(obj_water_fg)
 {
     x = startX+view_xview;
 }
+
 }
 </string>
           </argument>
@@ -190,6 +191,9 @@ if acc &gt; 0
     acc -= .025;
     obj_water.vspd[__pos1] -= (acc/2);
     image_xscale = 1;
+    obj_water.tw += xprevious-x;
+    obj_water_fg.tw += xprevious-x;
+    obj_water_bg.tw += xprevious-x;
 }
 
 if acc &lt; 0
@@ -197,11 +201,10 @@ if acc &lt; 0
     acc += .025;
     obj_water.vspd[__pos2] -= (abs(acc)/2);
     image_xscale = -1;
+    obj_water.tw -= x-xprevious;
+    obj_water_fg.tw -= x-xprevious;
+    obj_water_bg.tw -= x-xprevious;
 }
-
-obj_water.tw += xprevious-x;
-obj_water_fg.tw += xprevious-x;
-obj_water_bg.tw += xprevious-x;
 
 image_angle += obj_water.ypos[__pos-1]-obj_water.ypos[__pos+1];
 
