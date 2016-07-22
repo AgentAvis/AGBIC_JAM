@@ -64,6 +64,7 @@
     </sprites>
     <sprites name="solids">
       <sprite>sprites\spr_solid</sprite>
+      <sprite>sprites\spr_block_move</sprite>
       <sprite>sprites\spr_floor</sprite>
       <sprite>sprites\spr_NPC_test</sprite>
       <sprite>sprites\spr_boat</sprite>
@@ -97,6 +98,7 @@
       </scripts>
     </scripts>
     <script>scripts\approach.gml</script>
+    <script>scripts\scr_block_move.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_test</font>
@@ -129,6 +131,7 @@
     <object>objects\obj_sun</object>
     <object>objects\obj_NPC_test</object>
     <object>objects\obj_speech</object>
+    <object>objects\obj_block_move</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_init</room>

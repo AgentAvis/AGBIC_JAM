@@ -55,13 +55,13 @@
     with(spch)
     {
         //write your messages in an array, starting at 0, like so
-        message[0] = "Oh hey there bibbidy bobbidy. How're you today?";
-        message[1] = "Oh you know jojo, just trying not to die of boredom.";
-        message[2] = "Yeah....aren't we all.";
-        message[3] = "Things not going so well, huh?";
-        message[4] = "12 days left.";
-        message[5] = "Wow, that bad, huh?";
-        message[6] = "You have no idea.";
+        message[0] = "Okay, listen up you bitch ass";
+        message[1] = "You see dat red block beside me?";
+        message[2] = "Hold Z and A or D to move it motherfucker";
+        message[3] = "Did you hear me?";
+        message[4] = "I know this is handholding";
+        message[5] = "Man fuck you";
+        message[6] = "Judging me and shit...";
 
         message_current = 0; //0 is the first number in our array, and the message we are currently at
         message_end = 6; //6 is the last number in our array

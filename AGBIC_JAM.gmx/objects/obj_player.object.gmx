@@ -75,27 +75,20 @@ last_index = -1;
             <kind>1</kind>
             <string>if sprite_index = spr_player_run
 {
-    if (image_index &gt;= 0 || image_index &lt; 1) &amp;&amp; (sp == -1)
+    if ((image_index &gt;= 0 &amp;&amp; image_index &lt; 1) || (image_index &gt;= 2 &amp;&amp; image_index &lt; 3)) &amp;&amp; (sp == -1)
     {
         audio_play_sound(choose(snd_sand_step,snd_sand_step_1,snd_sand_step_2),0,0);
         sp = 1;
     }
-    else if !(image_index &gt;= 0 || image_index &lt; 1)
-    {
-        sp = -1;
-    }
-    else if (image_index &gt;= 3 || image_index &lt; 4) &amp;&amp; !(sp)
-    {
-        audio_play_sound(choose(snd_sand_step,snd_sand_step_1,snd_sand_step_2),0,0);
-        sp = 1;
-    }
-    else if !(image_index &gt;= 3 || image_index &lt; 4)
+    if !((image_index &gt;= 0 &amp;&amp; image_index &lt; 1) || (image_index &gt;= 2 &amp;&amp; image_index &lt; 3)) 
     {
         sp = -1;
     }
 }
-
-last_index = round(image_index);
+else
+{
+    sp = -1;
+}
 </string>
           </argument>
         </arguments>
@@ -220,7 +213,7 @@ if (vsp == 0) // "Stick" player to ground on shallow downward slopes
         y += yplus;
     }
 }
-if (place_meeting(x+hsp, y, par_solid_platforming)) {
+if (place_meeting(x+hsp, y, par_solid_platforming)&amp;&amp; !place_meeting(x+hsp, y, obj_block_move)) {
     
     yplus = 0;
     while (place_meeting(x+hsp,y-yplus,par_solid_platforming) and yplus &lt;= abs(1 * hsp)) { yplus ++ }
@@ -231,6 +224,16 @@ if (place_meeting(x+hsp, y, par_solid_platforming)) {
     } else {
     y-= yplus;
     }
+}
+
+if (place_meeting(x+hsp,y,obj_block_move))
+{
+    var push = instance_place(x+hsp,y,obj_block_move)
+    with(push)
+    {
+        scr_block_move(obj_player.hsp/2);
+    }
+    hsp /= 2;
 }
 x += hsp //* global.time;
 
@@ -287,7 +290,6 @@ if hsp &gt; .2 or hsp &lt; -.2
         sprite_index = spr_player_idle
     }
 }
-
 //am i going up and down (if i'm airborne) //currently dissabled because of lack of sprites
 /*
     if vsp &lt; 0
