@@ -32,7 +32,7 @@
  instance in the room editor for more customized water bodies.
 */
 color = make_colour_rgb(180,146,134); //The color of the water.
-image_alpha = .95; //The density/see-thoughness of the water.
+image_alpha = 1; //The density/see-thoughness of the water.
 
 tw = 0;
 
@@ -298,7 +298,7 @@ if glimmer {
  //We draw a 1 pixel thik line, with fading alpha depending on the wave height.
  for(var i=0;i&lt;nodes;i++){
   draw_set_alpha(0);
-  draw_vertex(x+i*__ndist,y+ypos[i]+6);
+  draw_vertex(x+i*__ndist,y+ypos[i]+12);
   draw_set_alpha(-ypos[i]*10);
   draw_vertex(x+i*__ndist,y+ypos[i]);
  }

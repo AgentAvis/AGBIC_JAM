@@ -41,11 +41,20 @@
   </datafiles>
   <NewExtensions/>
   <sounds name="sound">
-    <sound>sound\snd_sand_decc</sound>
-    <sounds name="sand_steps">
-      <sound>sound\snd_sand_step</sound>
-      <sound>sound\snd_sand_step_1</sound>
-      <sound>sound\snd_sand_step_2</sound>
+    <sounds name="bg_music">
+      <sound>sound\snd_test_4</sound>
+    </sounds>
+    <sounds name="sfx">
+      <sounds name="sand_steps">
+        <sound>sound\snd_sand_step</sound>
+        <sound>sound\snd_sand_step_1</sound>
+        <sound>sound\snd_sand_step_2</sound>
+        <sound>sound\snd_sand_decc</sound>
+      </sounds>
+      <sounds name="misc">
+        <sound>sound\snd_sfx_skiptxt</sound>
+        <sound>sound\sfx_txt_enter</sound>
+      </sounds>
     </sounds>
   </sounds>
   <sprites name="sprites">
@@ -55,6 +64,8 @@
     </sprites>
     <sprites name="solids">
       <sprite>sprites\spr_solid</sprite>
+      <sprite>sprites\spr_floor</sprite>
+      <sprite>sprites\spr_NPC_test</sprite>
       <sprite>sprites\spr_boat</sprite>
     </sprites>
     <sprites name="Actors">
@@ -65,6 +76,12 @@
     <sprites name="Misc">
       <sprite>sprites\spr_latter</sprite>
     </sprites>
+    <sprites name="bg_islands">
+      <sprite>sprites\bg_island_0</sprite>
+      <sprite>sprites\bg_island_1</sprite>
+      <sprite>sprites\bg_island_2</sprite>
+    </sprites>
+    <sprite>sprites\spr_sun</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\background0</background>
@@ -106,6 +123,12 @@
     <object>objects\obj_master_control</object>
     <object>objects\obj_floor</object>
     <object>objects\obj_camera</object>
+    <object>objects\obj_bg_island_0</object>
+    <object>objects\obj_bg_island_1</object>
+    <object>objects\obj_bg_island_2</object>
+    <object>objects\obj_sun</object>
+    <object>objects\obj_NPC_test</object>
+    <object>objects\obj_speech</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_init</room>

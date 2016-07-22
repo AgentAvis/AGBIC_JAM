@@ -3,7 +3,7 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>-100000</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -25,13 +25,32 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>audio_play_sound(snd_test_4,0,1);
+            <string>//write your messages in an array, starting at 0, like so
+audio_play_sound(sfx_txt_enter,0,0);
+obj_camera.cut = 1;
+obj_camera.can_cut = -1;
+message[0] = "Hello there! Welcome to the world of Pokemon!";
+message[1] = "My name is Oak! People call me the Pokemon Prof!";
+message[2] = "This world is inhabited by creatures called Pokemon!";
+message[3] = "For some people, Pokemon are pets.";
+message[4] = "Others use them for fights.";
+message[5] = "Myself...";
+message[6] = "I study Pokemon as a profession.";
+
+message_current = 0; //0 is the first number in our array, and the message we are currently at
+message_end = 6; //6 is the last number in our array
+message_draw = ""; //this is what we 'write' out. It's blank right now
+increase = 0.5; //the speed at which new characters are added
+characters = 0; //how many characters have already been drawn
+hold = 0; //if we hold 'Z', the text will render faster
+
+message_length = string_length(message[message_current]);
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="64">
+    <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -48,36 +67,33 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_font(fnt_test);
-draw_set_colour(c_white);
-draw_text(8,8,'nodes: ' +string(obj_water.nodes));
-draw_text(8,24,'smoothness: ' +string(obj_water.smoothness));
-draw_text(8,40,'disturbance: ' +string(obj_water.disturbance));
-draw_text(8,56,'dampening: ' +string(obj_water.damp));
-draw_text(8,72,'frequency: ' +string(obj_water.freq));
-draw_text(8,88,'fps: ' +string(fps));
+            <string>if (characters &lt; message_length) &amp;&amp; !audio_is_playing(sfx_txt_enter){ //if current character count is less than the amount in current message* 
+    hold = keyboard_check(ord("Z")); //hold is true or false if we hold 'Z' or not
+    audio_play_sound(snd_sfx_skiptxt,0,0);
+    characters += increase * (1 + hold); //increase speed based on hold
+    message_draw = string_copy(message[message_current], 0, characters); //copy string to current character
+} 
+else { //if current character is more than the amount in the current message
+    if (keyboard_check_pressed(ord("Z"))) { //if we press Z...
+        if (message_current &lt; message_end) { //if there are more messages left to show (0 -&gt; 6, in our case)
+            message_current += 1; //increase the message by 1
+            message_length = string_length(message[message_current]);  //get the new character length for message
+            characters = 0; //set the characters back to 0
+            message_draw = ""; //clear the drawn text
+        }
+        else { //if our messages are done (we reach 6, in our case)...
+            obj_camera.cut = -1;
+            obj_camera.alarm[0] = 60;
+            instance_destroy(); //destroy the object
+        }
+    }
+}
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="9" enumb="82">
-      <action>
-        <libid>1</libid>
-        <id>331</id>
-        <kind>0</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>0</useapplyto>
-        <exetype>1</exetype>
-        <functionname>action_restart_game</functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-      </action>
-    </event>
-    <event eventtype="9" enumb="27">
+    <event eventtype="8" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -94,7 +110,7 @@ draw_text(8,88,'fps: ' +string(fps));
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>game_end();
+            <string>draw_text(view_xview+32, view_yview+view_hview-64, message_draw); //draw the text at the coordinates
 </string>
           </argument>
         </arguments>

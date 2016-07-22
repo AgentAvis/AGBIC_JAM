@@ -54,6 +54,8 @@ b = -1;
             <kind>1</kind>
             <string>//view_wview = (abs(x-xprevious)*64)+480;
 //view_hview = (view_wview*9)/16;
+if b
+{
 if (x &gt; ((obj_water.startX+(32*obj_water.image_xscale))-(view_wview[0] / 2))+1){
     x = obj_water.startX+(view_wview[0] / 2)+1;
     //view_xview[0] = 0;
@@ -62,9 +64,6 @@ if (x &lt; (obj_water.startX+(view_wview[0] / 2))){
     x = ((obj_water.startX+(32*obj_water.image_xscale))-(view_wview[0] / 2));
     //view_xview[0] = (room_width-view_wview[0]);
     }
-    
-view_xview = x-(view_wview/2);
-view_yview = y-(view_hview/2);
 
 with(obj_water)
 {
@@ -77,6 +76,7 @@ with(obj_water_bg)
 with(obj_water_fg)
 {
     x = startX+view_xview;
+}
 }
 </string>
           </argument>

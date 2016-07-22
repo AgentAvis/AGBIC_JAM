@@ -3,7 +3,7 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>1000</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -30,6 +30,32 @@
 cut = -1;
 wres = 640;
 hres = 360;
+dy0 = 0;
+dy1 = display_get_gui_height();
+can_cut = 1;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>can_cut = 1;
 </string>
           </argument>
         </arguments>
@@ -54,9 +80,18 @@ hres = 360;
             <kind>1</kind>
             <string>if cut
 {
+    dy0 = approach(dy0,display_get_gui_height()/8,1);
+    dy1 = approach(dy1,display_get_gui_height()-(display_get_gui_height()/8),1);
+}
+else
+{
+    dy0 = approach(dy0,0,1);
+    dy1 = approach(dy1,display_get_gui_height(),1);
+}
+/*
     if wres &gt; 480
     {
-        wres -= 1;
+        wres -= 2;
         hres = (wres*4)/9;
     }
 }
@@ -64,13 +99,13 @@ else
 {
     if wres &lt; 640
     {
-        wres += 1;
+        wres += 2;
         hres = (wres*9)/16;
     }
 }
 
-if view_wport != wres { view_wport = approach(view_wport,wres,4);}
-if view_hport != hres { view_hport = approach(view_hport,hres,4);}
+if view_wport != wres { view_wport = approach(view_wport,wres,2);}
+if view_hport != hres { view_hport = approach(view_hport,hres,2);}
 surface_resize(application_surface,view_wport,view_hport);
 </string>
           </argument>
@@ -92,20 +127,76 @@ surface_resize(application_surface,view_wport,view_hport);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (keyboard_check(ord('A')) || keyboard_check(ord('D')) || keyboard_check(vk_left) || keyboard_check(vk_right))
+            <string>if obj_boat.b
 {
-xx += 0.05;
+    with(obj_boat)
+    {
+        view_xview = x-(view_wview/2);
+        view_yview = approach(view_yview,0,1);
+        view_wview = approach(view_wview,480+(abs(acc)*128),1);
+    }
 }
 else
 {
-xx -= 0.1;
+    with(obj_player)
+    {
+        view_xview = x-(view_wview/2);
+        view_yview = approach(view_yview,y-(view_hview/2),1);
+        view_wview = approach(view_wview,480,1);
+    }
 }
 
-if xx &lt; 0 { xx = 0; }
-if xx &gt; 4 { xx = 4; }
-/*
-view_wview[0] = (xx*64)+480;
-view_hview[0] = (view_wview*9)/16;
+view_hview = (view_wview*9)/16;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="64">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>draw_set_colour(c_black);
+draw_rectangle(0,0,display_get_gui_width(),dy0,0);
+draw_rectangle(0,display_get_gui_height(),display_get_gui_width(),dy1,0);
+draw_set_colour(c_white);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>draw_sprite(spr_sun,-1,view_xview+(view_wview/2),obj_sun.y);
+
 </string>
           </argument>
         </arguments>
